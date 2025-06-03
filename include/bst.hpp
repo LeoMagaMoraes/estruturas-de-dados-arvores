@@ -12,7 +12,7 @@
  */
 template <class T>
 class BST {
- private:
+ public:
   /**
    * @brief Estrutura interna que representa um nó da árvore.
    */
@@ -48,6 +48,7 @@ class BST {
     TreeNode* min();
   };
 
+ private:
   /**
    * @brief Insere um valor na árvore recursivamente.
    *
@@ -110,6 +111,20 @@ class BST {
    */
   void post_order(const TreeNode* const node, std::vector<T>& result) const;
 
+  TreeNode* find_node(TreeNode* node, const T& value) const {
+    if (node == nullptr) {
+      return nullptr;
+    }
+
+    if (value < node->data) {
+      return find_node(node->left, value);
+    } else if (node->data < value) {
+      return find_node(node->right, value);
+    } else {
+      return node;
+    }
+  }
+
  public:
   /**
    * @brief Construtor da árvore (inicialmente vazia).
@@ -171,6 +186,13 @@ class BST {
    * @return Vetor com os valores em pós-ordem.
    */
   std::vector<T> post_order() const;
+
+  /**
+   * @brief Retorna o ponteiro para o nodo contendo o valor.
+   *
+   * @return Ponteiro para o nodo ou nullptr se o valor não estiver na árvore.
+   */
+  TreeNode* find_node(const T& value) const { return find_node(root, value); }
 
  private:
   TreeNode* root;  ///< Ponteiro para a raiz da árvore.
